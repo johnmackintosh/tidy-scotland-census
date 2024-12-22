@@ -36,5 +36,5 @@ walk(files[1:10], ~ tidy_census(.x, write = TRUE, print = FALSE), .progress = TR
 res <- map(files, ~ tidy_census(.x, write = FALSE, print = FALSE), .progress = TRUE)
 
 # get the results for the first element
-show_results(1)
+show_results(res,1)
 
