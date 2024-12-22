@@ -7,7 +7,7 @@ Source data is at output area level and is available from https://www.scotlandsc
 When unzipped, you should have 71 csv files. These are in wide format, with additional rows of descriptive text above and below the data.
 File `UV608 - National Statistics Socio-economic Classification (NS-SeC) of Household Reference Person (HRP).csv` only has one row of data, and should be placed into a separate directory as it's not worth including in this work
 
-(You may also need the output area lookup files to match on specific areas).
+(You may also need the output area lookup files to match on specific areas - [you can grab them here](https://www.nrscotland.gov.uk/publications/2022-census-geography-products/)).
 As things stand, this code does not filter out for a specific area, so can be used by analysts / interested persons to obtain datasets for all Scotland output areas.
 
 ### Issues
@@ -16,7 +16,8 @@ As things stand, this code does not filter out for a specific area, so can be us
 - The first 3 rows of each file contain generic information about the dataset and can be discarded for analysis. Because these are of varying widths, various file readers may trip up when reading them in. `data.table` suggests using `fill  = TRUE` when using `fread`, but that causes immediate failure in some cases.
 - The last 8 rows contain text that should also be discarded
 - Once these rows have been discarded, many files have headers in multiple rows which need to be extracted, combined, and the added back as column headers.
-- Need to account for having between 0-5 rows of column headers
+- Need to account for having between 0-5 rows of column headers, with some blank rows in between
+- Some files have extra delimiters in the first 3 rows
 - The easy bit -  tidy the data into long format and write it out
 - There are some files that defy these steps and so extra filtering and manipulation is required
 
