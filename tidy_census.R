@@ -35,7 +35,7 @@ tidy_census <- function(x,
   col_name <- "variable"
 
   #rows_to_change <- which(grepl("_{2,}", out_dt[[col_name]]))
-  rows_to_change <- out_dt[variable %ilike% "_{2,}",.I]
+  rows_to_change <- out_dt[variable %like% "_{2,}",.I]
   set(out_dt, i = rows_to_change, j = col_name,
      value =  stri_replace_all_regex(out_dt[[col_name]][rows_to_change],
      pattern = "_{2,}",
