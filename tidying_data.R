@@ -1,6 +1,7 @@
 library(data.table)
 library(purrr)
 library(tidyr)
+library(stringi)
 
 files <- dir(pattern = "*.csv")
 
