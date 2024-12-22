@@ -1,4 +1,5 @@
 library(data.table)
+library(purrr)
 library(dplyr)
 library(DBI)
 library(duckdb)
@@ -27,9 +28,9 @@ append_to_table <- function(x) {
 
 walk(tidy_files[2:70], ~ append_to_table(.x))
 
-tidy_files[2:70] |> walk(\(x)(fread(x) |>
-                         duckdb::dbAppendTable(con, table_name, x)),
-                   .progress = TRUE)
+# tidy_files[2:70] |> walk(\(x)(fread(x) |>
+ #                        duckdb::dbAppendTable(con, table_name, x)),
+  #                 .progress = TRUE)
 
 DBI::dbDisconnect(con)
 
