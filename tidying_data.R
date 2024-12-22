@@ -34,3 +34,7 @@ walk(files[1:10], ~ tidy_census(.x, write = TRUE, print = FALSE), .progress = TR
 
 # if for some unfathomable reason you want everything in a nested list, you can run this - not recommended
 res <- map(files, ~ tidy_census(.x, write = FALSE, print = FALSE), .progress = TRUE)
+
+# get the results for the first element
+show_results(1)
+
