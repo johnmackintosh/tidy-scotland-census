@@ -1,6 +1,7 @@
 tidy_census <- function(x,
                         write = FALSE,
                         out_folder = "tidy",
+                        collapse_sym = " ", # optional separator when joining strings
                         print = TRUE,
                         return = TRUE){
  start_target <- "S00135307"
@@ -12,62 +13,69 @@ tidy_census <- function(x,
 
   int_dt <- fread(x, skip = 0, header = FALSE)
 
-  # find the row with the start_target value, and retrieve all the rows above it
-  headers <- int_dt[,head(.SD,grep(start_target,V1) - 1L)]
-  # turn these into character vector of new column names
+   headers <- int_dt[V1 == ""]
+  int_dt <- fsetdiff(int_dt, headers)
+
   new_colnames <- headers[,lapply(.SD,
-                                  stringi::stri_join, collapse = " ") |>
+                                  stringi::stri_join,
+                                  collapse = collapse_sym) |>
                             unlist() |>
                             unname()]
-  new_colnames[1] <- "OA2022"
 
-  # remove the first n header rows - the rest of the rows are the data we need to process
-  int_dt <- int_dt[,tail(.SD, -dim(headers)[1])]
+  new_colnames[1] <- "OA2022"
 
   setnames(int_dt, new = new_colnames)
   int_dt[,let(Code = code_value)]
 
-  out_dt <- int_dt |>
-    data.table::melt(id.vars = c("OA2022", "Code"))
+  int_dt <- int_dt |> data.table::melt(id.vars = c("OA2022", "Code"))
 
   # replace any multiple underscores in variable column
 
   col_name <- "variable"
 
-  #rows_to_change <- which(grepl("_{2,}", out_dt[[col_name]]))
-  rows_to_change <- out_dt[variable %like% "_{2,}",.I]
-  set(out_dt, i = rows_to_change, j = col_name,
-     value =  stri_replace_all_regex(out_dt[[col_name]][rows_to_change],
-     pattern = "_{2,}",
-     replacement = ""))
+  rows_to_change <- int_dt[variable %like% "_{2,}",.I]
+
+  set(int_dt ,
+      i = rows_to_change,
+      j = col_name,
+      value =  stri_replace_all_regex(int_dt[[col_name]][rows_to_change],
+                                      pattern = "_{2,}", # 2 or more underscores
+                                      replacement = ""))
+  rm(rows_to_change)
 
   #copy the value column to convert to numeric
-  out_dt[,let(value_num = value)]
+  int_dt[,let(value_num = value)]
 
-  # value column - remove the  "-" wherever in the relevant rows
-   out_dt[value_num %like% "-", let(value_num = NA)]
+  # value column - remove the  "-" wherever it appears in the relevant rows
+  int_dt[value_num %like% "-", let(value_num = NA)]
 
-  out_dt[,let(value_num = as.numeric(value_num))]
+  int_dt[,let(value_num = as.numeric(value_num))]
 
   if (write) {
     fname <- paste("./",out_folder,"/", x, sep = "")
     fname <- gsub("\\s{1,}", "-", fname, fixed = TRUE) # strip spaces
     fname <- gsub("-{2,}", "-", fname, fixed = TRUE) # strip hyphens
-    fname <- gsub(".csv", ".tsv",fname, fixed = TRUE)
+    fname <- gsub(".csv", ".tsv", fname, fixed = TRUE)
 
-    fwrite(out_dt ,fname, sep = "\t")
+    fwrite(int_dt, fname, sep = "\t")
   }
-
-  rm(int_dt)
 
   if (print) {
-    print(out_dt)
+    print(int_dt)
   }
 
+rm(headers)
+rm(new_colnames)
+
   if (return) {
-    return(out_dt)
+    return(int_dt)
   }
 
 }
+
+ 
+ 
+
+
   
  
