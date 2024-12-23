@@ -45,7 +45,7 @@ tidy_census <- function(x,
   out_dt[,let(value_num = value)]
 
   # value column - remove the  "-" wherever in the relevant rows
-   out_dt[value_num %like% "-", let(value_num = 0)]
+   out_dt[value_num %like% "-", let(value_num = NA)]
 
   out_dt[,let(value_num = as.numeric(value_num))]
 
