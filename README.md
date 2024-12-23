@@ -22,9 +22,8 @@ As things stand, this code does not filter out for a specific area, so can be us
 - There are some files that defy these steps and so extra filtering and manipulation is required
 
 ### Method
-After trying various ways using `scan` and `read_lines` to determine the correct number of rows to skip and convert to headers, I realised I could streamline the process.
-This results in only one read for each file and no requirements to save temporary files.
-The slowest part of this function is the use of `gsub`. 
+After trying various ways using `scan` and `read_lines` to determine the correct number of rows to skip and convert to headers, I realised I could streamline the process using `fsetdiff`.
+This results in only one read for each file, no worrying about which row the data starts in and no requirements to save temporary files.
 
 ### Notes
 Originally I stripped out rows where the value field had `"-"`, but I was concerned that this might mean some missing results in the final tidied data.
