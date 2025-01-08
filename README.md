@@ -27,7 +27,7 @@ This results in only one read for each file, no worrying about which row the dat
 
 ### Notes
 Originally I stripped out rows where the value field had `"-"`, but I was concerned that this might mean some missing results in the final tidied data.
-So, I copied the value column, which is currently a character vector, replaced the `"-"` with `0L`, and converted to `numeric`
+So, I copied the value column, which is currently a character vector, replaced the `"-"` with `NA`, and converted to `numeric`
 Finally, I added the abbreviated code from each dataset (usually 5 or 6 characters) for easy filtering once the data is combined into a single table. 
 
 ### TO DO
