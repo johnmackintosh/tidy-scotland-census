@@ -7,7 +7,7 @@ files <- dir(pattern = "*.csv")
 
 # create and view a tidy data set
 
-tidy_census(files[1])
+tidy_census(files[1], return = FALSE)
 
 
 # run the safe function and check for any errors
