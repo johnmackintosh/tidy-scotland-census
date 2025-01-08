@@ -1,8 +1,8 @@
-tidy_census_orig <- function(x,
+tidy_census_draft <- function(x,
                         write = FALSE,
                         out_folder = "tidy") {
 
-  # this was a very early attmpt that worked, but was slow, and not particularly elegant
+  # this was a very early attempt that worked, but was slow, and not particularly elegant
   # definitely do not use this one.
   # however - the basic strategy - scan the file, find target value, use that as basis for reading in file and futher processing, is still sound
 
