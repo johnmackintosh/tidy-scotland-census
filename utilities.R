@@ -1,3 +1,5 @@
+safe_tidy_census <- purrr::safely(tidy_census)
+
 show_results <- function(res_t, x){
   out <-   res_t[x] %>% tibble::enframe() %>%
     tidyr::hoist(value,
