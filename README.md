@@ -5,7 +5,6 @@ R code to tidy Scotland 2022 Census open data csv files into tidy format
 Source data is at output area level and is available from https://www.scotlandscensus.gov.uk/documents/2022-output-area-data/
 
 When unzipped, you should have 71 csv files. These are in wide format, with additional rows of descriptive text above and below the data.
-File `UV608 - National Statistics Socio-economic Classification (NS-SeC) of Household Reference Person (HRP).csv` only has one row of data, and should be placed into a separate directory as it's not worth including in this work
 
 (You may also need the output area lookup files to match on specific areas - [you can grab them here](https://www.nrscotland.gov.uk/publications/2022-census-geography-products/)).
 As things stand, this code does not filter out for a specific area, so can be used by analysts / interested persons to obtain datasets for all Scotland output areas.
@@ -28,10 +27,10 @@ This results in only one read for each file, no worrying about which row the dat
 ### Notes
 Originally I stripped out rows where the value field had `"-"`, but I was concerned that this might mean some missing results in the final tidied data.
 So, I copied the value column, which is currently a character vector, replaced the `"-"` with `NA`, and converted to `numeric`
-Finally, I added the abbreviated code from each dataset (usually 5 or 6 characters) for easy filtering once the data is combined into a single table. 
+Finally, I added the abbreviated code from each dataset (usually 5 or 6 characters) for easy filtering if multiple data sets are combined into a single table. 
 
 ### TO DO
-- join to higher areas for easier filtering?
+- [ ] join to higher areas for easier filtering?
 - [x] write out as parquet files
 - [x] create and add to duckdb 
 
