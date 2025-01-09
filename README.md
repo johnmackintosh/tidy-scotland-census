@@ -34,3 +34,6 @@ Finally, I added the abbreviated code from each dataset (usually 5 or 6 characte
 - [x] write out as parquet files
 - [x] create and add to duckdb 
 
+### More blurb:
+https://johnmackintosh.net/blog/rstats/2024-12-22-tidying-text-files/
+
