@@ -11,6 +11,9 @@ tidy_census <- function(x,
   # use skip = 0 and header  = FALSE so that the first n rows will become the eventual column names
   # skipping or specifying a header means we end up with mix of  first row as column header, and subsequent rows in the data, and it is hard to extract them all
 
+  # library(data.table)
+  # library(stringi)
+
   int_dt <- fread(x, skip = 0, header = FALSE)
 
    headers <- int_dt[V1 == ""]
@@ -38,7 +41,7 @@ tidy_census <- function(x,
   set(int_dt ,
       i = rows_to_change,
       j = col_name,
-      value =  stri_replace_all_regex(int_dt[[col_name]][rows_to_change],
+      value =  stringi::stri_replace_all_regex(int_dt[[col_name]][rows_to_change],
                                       pattern = "_{2,}", # 2 or more underscores
                                       replacement = ""))
   rm(rows_to_change)
