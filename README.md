@@ -32,7 +32,42 @@ Finally, I added the abbreviated code from each dataset (usually 5 or 6 characte
 ### TO DO
 - [ ] join to higher areas for easier filtering?
 - [x] write out as parquet files
-- [x] create and add to duckdb 
+- [x] create and add to duckdb
+
+### How to use
+
+Assuming you have downloaded the census file data from https://www.scotlandscensus.gov.uk/documents/2022-output-area-data/
+
+Unzip the files  
+copy the source CSV file you want to tidy to the root of your working directory (in the main folder, not a sub-folder)
+
+## Tidying in a single file
+Pass the filename to the tidy_census function, and ensure the `write` parameter is set to `TRUE` (which is set to `FALSE` by default)
+
+The data will be read in, tidied (into long format), and  will be written to a sub-folder of your choice - specify it in the function
+It will also print to the console so you can see what you are getting back. 
+Note - there is no filtering on this data, so it returns OA output for all Scotland.
+
+## Tidying multiple files
+I recommend a two step process for this. 
+Create a vector of filnames or the file positions
+```
+files <- dir(pattern = "*.csv") # make a list of file names
+my_files <- files[1:10] # take the first ten files
+```
+Now use the `safe` version of the tidy function (named `safe_tidy`)
+The safe function, and some other helper functions, is found in `utilities.R`
+```
+res <- map(my_files, ~ safe_tidy(.x, write = FALSE, print = FALSE), .progress = TRUE)`
+```
+Then check to see if there are any errors
+```
+show_errors(res)
+```
+Assuming all is OK, use purrr to write the files to disk
+```
+walk(my_files, ~ tidy_census(.x, write = TRUE, print = FALSE), .progress = TRUE)
+```
 
 ### More blurb:
 https://johnmackintosh.net/blog/rstats/2024-12-22-tidying-text-files/
