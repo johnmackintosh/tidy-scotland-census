@@ -36,9 +36,10 @@ walk(files[1:10], ~ tidy_census(.x, write = TRUE, print = FALSE), .progress = TR
 res <- map(files, ~ tidy_census(.x, write = FALSE, print = FALSE), .progress = TRUE)
 
 # get the results for the first element of the `res` list
-res[1] %>% tibble::enframe()%>%
+res[1] %>% 
+  tibble::enframe() %>%
   tidyr::hoist(value,
-               "value", .simplify = TRUE) %>% 
+               "value", .simplify = TRUE) %>%
   pluck("value")
 
 
