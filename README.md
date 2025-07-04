@@ -58,7 +58,7 @@ my_files <- files[1:10] # take the first ten files
 Now use the `safe` version of the tidy function (named `safe_tidy`)
 The safe function, and some other helper functions, is found in `utilities.R`
 ```
-res <- map(my_files, ~ safe_tidy(.x, write = FALSE, print = FALSE), .progress = TRUE)`
+res <- purrr::map(my_files, ~ safe_tidy(.x, write = FALSE, print = FALSE), .progress = TRUE)
 ```
 Then check to see if there are any errors
 ```
