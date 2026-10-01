@@ -70,5 +70,6 @@ walk(my_files, ~ tidy_census(.x, write = TRUE, print = FALSE), .progress = TRUE)
 ```
 
 ### More blurb:
-https://johnmackintosh.com/blog/rstats/2024-12-22-tidying-text-files/
+https://johnmackintosh.com/archive/tidying-text-files/
+
 
